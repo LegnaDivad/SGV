@@ -1,0 +1,140 @@
+/* Estilos para el primer formulario */
+#formulario1 {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#formulario1 h1 {
+    text-align: center;
+}
+
+#formulario1 form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#formulario1 label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#formulario1 input[type="text"],
+#formulario1 input[type="email"],
+#formulario1 input[type="number"],
+#formulario1 select,
+#formulario1 textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#formulario1 button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+#formulario1 button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos para el segundo formulario */
+#formulario2 {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#formulario2 h1 {
+    text-align: center;
+}
+
+#formulario2 form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#formulario2 label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#formulario2 input[type="text"],
+#formulario2 input[type="email"],
+#formulario2 input[type="number"],
+#formulario2 select,
+#formulario2 textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#formulario2 button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+#formulario2 button:hover {
+    background-color: #45a049;
+}
+
+/* Estilos específicos para el formulario de registro de tratamiento canino */
+
+/* Aplicar estilos solo al formulario de tratamiento canino */
+#tratamientoForm {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+#tratamientoForm h1 {
+    text-align: center;
+}
+
+#tratamientoForm {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+#tratamientoForm label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+#tratamientoForm input[type="text"],
+#tratamientoForm textarea,
+#tratamientoForm input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#tratamientoForm button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+#tratamientoForm button:hover {
+    background-color: #45a049;
+}
