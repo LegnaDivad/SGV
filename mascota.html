@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Mascotas</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    .container {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h2 {
+        margin-top: 0;
+        font-size: 24px;
+        color: #333;
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #666;
+    }
+    input[type="text"],
+    input[type="number"],
+    select {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    button[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Formulario de Mascotas</h2>
+    <form id="mascotaForm">
+        <label for="cliente">Cliente:</label>
+        <select id="cliente" name="cliente" required>
+            <!-- Aquí puedes llenar dinámicamente las opciones con datos de la base de datos -->
+            <option value="1">Cliente 1</option>
+            <option value="2">Cliente 2</option>
+            <!-- Otras opciones -->
+        </select>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+        <label for="especie">Especie:</label>
+        <input type="text" id="especie" name="especie" required>
+        <label for="raza">Raza:</label>
+        <input type="text" id="raza" name="raza">
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" min="0" required>
+        <label for="genero">Género:</label>
+        <select id="genero" name="genero" required>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+        </select>
+        <button type="submit">Agregar Mascota</button>
+    </form>
+</div>
+
+<script>
+document.getElementById("mascotaForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar el envío del formulario
+    
+    // Obtener los valores de los campos
+    var clienteId = document.getElementById("cliente").value;
+    var nombre = document.getElementById("nombre").value;
+    var especie = document.getElementById("especie").value;
+    var raza = document.getElementById("raza").value;
+    var edad = document.getElementById("edad").value;
+    var genero = document.getElementById("genero").value;
+
+    // Crear objeto de datos
+    var datosMascota = {
+        clienteId: clienteId,
+        nombre: nombre,
+        especie: especie,
+        raza: raza,
+        edad: edad,
+        genero: genero
+    };
+
+    // Enviar los datos a un servidor (puedes manejarlo con AJAX, por ejemplo)
+    console.log(datosMascota);
+    // Aquí puedes hacer una llamada AJAX para enviar los datos a tu backend
+});
+</script>
+</body>
+</html>

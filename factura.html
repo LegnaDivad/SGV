@@ -4,6 +4,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Formulario de Facturas</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    h2 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+    form {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #666;
+    }
+    select,
+    input[type="date"],
+    input[type="number"] {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    button[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
 </head>
 <body>
 <h2>Formulario de Facturas</h2>
@@ -21,7 +70,6 @@
     <input type="number" id="total" name="total" min="0" step="0.01" required><br><br>
     <button type="submit">Agregar Factura</button>
 </form>
-
 <script>
 document.getElementById("facturaForm").addEventListener("submit", function(event) {
     event.preventDefault(); // Evitar el envío del formulario
