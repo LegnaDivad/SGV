@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Productos</title>
+</head>
+<body>
+<h2>Formulario de Productos</h2>
+<form id="productoForm">
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br>
+    <label for="descripcion">Descripción:</label><br>
+    <textarea id="descripcion" name="descripcion" rows="4" cols="50"></textarea><br>
+    <label for="costo">Costo:</label><br>
+    <input type="number" id="costo" name="costo" min="0" step="0.01" required><br><br>
+    <button type="submit">Agregar Producto</button>
+</form>
+
+<script>
+document.getElementById("productoForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar el envío del formulario
+    
+    // Obtener los valores de los campos
+    var nombre = document.getElementById("nombre").value;
+    var descripcion = document.getElementById("descripcion").value;
+    var costo = document.getElementById("costo").value;
+
+    // Crear objeto de datos
+    var datosProducto = {
+        nombre: nombre,
+        descripcion: descripcion,
+        costo: costo
+    };
+
+    // Enviar los datos a un servidor (puedes manejarlo con AJAX, por ejemplo)
+    console.log(datosProducto);
+    // Aquí puedes hacer una llamada AJAX para enviar los datos a tu backend
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Clientes</title>
+</head>
+<body>
+<h2>Formulario de Clientes</h2>
+<form id="clienteForm">
+    <label for="nombre">Nombre:</label><br>
+    <input type="text" id="nombre" name="nombre" required><br>
+    <label for="direccion">Dirección:</label><br>
+    <input type="text" id="direccion" name="direccion" required><br>
+    <label for="telefono">Teléfono:</label><br>
+    <input type="tel" id="telefono" name="telefono"><br>
+    <label for="email">Email:</label><br>
+    <input type="email" id="email" name="email" required><br><br>
+    <button type="submit">Enviar</button>
+</form>
+
+<script>
+document.getElementById("clienteForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar el envío del formulario
+    
+    // Obtener los valores de los campos
+    var nombre = document.getElementById("nombre").value;
+    var direccion = document.getElementById("direccion").value;
+    var telefono = document.getElementById("telefono").value;
+    var email = document.getElementById("email").value;
+
+    // Crear objeto de datos
+    var datosCliente = {
+        nombre: nombre,
+        direccion: direccion,
+        telefono: telefono,
+        email: email
+    };
+
+    // Enviar los datos a un servidor (puedes manejarlo con AJAX, por ejemplo)
+    console.log(datosCliente);
+    // Aquí puedes hacer una llamada AJAX para enviar los datos a tu backend
+});
+</script>
+</body>
+</html>

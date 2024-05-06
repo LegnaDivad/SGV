@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Citas</title>
+</head>
+<body>
+<h2>Formulario de Citas</h2>
+<form id="citaForm">
+    <label for="cliente">Cliente:</label><br>
+    <select id="cliente" name="cliente" required>
+        <!-- Aquí puedes llenar dinámicamente las opciones con datos de la base de datos -->
+        <option value="1">Cliente 1</option>
+        <option value="2">Cliente 2</option>
+        <!-- Otras opciones -->
+    </select><br>
+    <label for="mascota">Mascota:</label><br>
+    <select id="mascota" name="mascota" required>
+        <!-- Aquí puedes llenar dinámicamente las opciones con datos de la base de datos -->
+        <option value="1">Mascota 1</option>
+        <option value="2">Mascota 2</option>
+        <!-- Otras opciones -->
+    </select><br>
+    <label for="veterinario">Veterinario:</label><br>
+    <select id="veterinario" name="veterinario" required>
+        <!-- Aquí puedes llenar dinámicamente las opciones con datos de la base de datos -->
+        <option value="1">Veterinario 1</option>
+        <option value="2">Veterinario 2</option>
+        <!-- Otras opciones -->
+    </select><br>
+    <label for="fecha">Fecha:</label><br>
+    <input type="date" id="fecha" name="fecha" required><br>
+    <label for="hora">Hora:</label><br>
+    <input type="time" id="hora" name="hora" required><br><br>
+    <button type="submit">Guardar Cita</button>
+</form>
+
+<script>
+document.getElementById("citaForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Evitar el envío del formulario
+    
+    // Obtener los valores de los campos
+    var clienteId = document.getElementById("cliente").value;
+    var mascotaId = document.getElementById("mascota").value;
+    var veterinarioId = document.getElementById("veterinario").value;
+    var fecha = document.getElementById("fecha").value;
+    var hora = document.getElementById("hora").value;
+
+    // Crear objeto de datos
+    var datosCita = {
+        clienteId: clienteId,
+        mascotaId: mascotaId,
+        veterinarioId: veterinarioId,
+        fecha: fecha,
+        hora: hora
+    };
+
+    // Enviar los datos a un servidor (puedes manejarlo con AJAX, por ejemplo)
+    console.log(datosCita);
+    // Aquí puedes hacer una llamada AJAX para enviar los datos a tu backend
+});
+</script>
+</body>
+</html>
