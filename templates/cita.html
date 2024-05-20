@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Formulario de Citas</title>
+   <style>
+       body {
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f4f4f4;
+       }
+       .container {
+           max-width: 600px;
+           margin: 0 auto;
+           padding: 20px;
+           background-color: #fff;
+           border-radius: 5px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+       h2 {
+           margin-top: 0;
+           font-size: 24px;
+           color: #333;
+       }
+       label {
+           display: block;
+           margin-bottom: 5px;
+           color: #666;
+       }
+       select,
+       input[type="date"],
+       input[type="time"] {
+           width: 100%;
+           padding: 8px;
+           margin-bottom: 15px;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box;
+           font-size: 16px;
+       }
+       button[type="submit"],
+       button[type="button"] {
+           background-color: #4caf50;
+           color: #fff;
+           padding: 10px 20px;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           font-size: 16px;
+       }
+       button[type="submit"]:hover,
+       button[type="button"]:hover {
+           background-color: #45a049;
+       }
+       .mensaje {
+           margin-top: 15px;
+           font-size: 16px;
+       }
+   </style>
+</head>
+<body>
+   <div class="container">
+       <h2>Formulario de Citas</h2>
+       <form id="citaForm">
+           <label for="cliente">Cliente:</label>
+           <select id="cliente" name="cliente" required>
+           </select>
+           <label for="mascota">Mascota:</label>
+           <select id="mascota" name="mascota" required>
+           </select>
+           <label for="veterinario">Veterinario:</label>
+           <select id="veterinario" name="veterinario" required>
+               <option value="1">Veterinario 1</option>
+               <option value="2">Veterinario 2</option>
+           </select>
+           <label for="fecha">Fecha:</label>
+           <input type="date" id="fecha" name="fecha" required>
+           <label for="hora">Hora:</label>
+           <input type="time" id="hora" name="hora" required>
+           <button type="submit">Guardar Cita</button>
+           <button type="button" id="regreso">Volver al Menú</button>
+       </form>
+       <div id="mensaje" class="mensaje"></div>
+   </div>
+   <script>
+       // Función para obtener los clientes desde el servidor
+       function obtenerClientes() {
+           fetch('http://localhost:3001/clientes') // Ruta del servidor que maneja la solicitud de clientes
+           .then(response => response.json())
+           .then(data => {
+               var selectCliente = document.getElementById('cliente');
+               data.forEach(cliente => {
+                   var option = document.createElement('option');
+                   option.value = cliente.id;
+                   option.textContent = cliente.nombre;
+                   selectCliente.appendChild(option);
+               });
+           })
+           .catch(error => console.error('Error al obtener los clientes:', error));
+       }
+
+       // Función para obtener las mascotas desde el servidor
+       function obtenerMascotas() {
+           fetch('http://localhost:3001/mascotas') // Ruta del servidor que maneja la solicitud de mascotas
+           .then(response => response.json())
+           .then(data => {
+               var selectMascota = document.getElementById('mascota');
+               data.forEach(mascota => {
+                   var option = document.createElement('option');
+                   option.value = mascota.id;
+                   option.textContent = mascota.nombre;
+                   selectMascota.appendChild(option);
+               });
+           })
+           .catch(error => console.error('Error al obtener las mascotas:', error));
+       }
+
+       document.addEventListener('DOMContentLoaded', function() {
+           obtenerClientes(); // Llamar a la función para obtener clientes cuando el DOM esté cargado
+           obtenerMascotas(); // Llamar a la función para obtener mascotas cuando el DOM esté cargado
+       });
+
+       document.getElementById("citaForm").addEventListener("submit", function(event) {
+           event.preventDefault();
+           
+           var clienteId = document.getElementById("cliente").value;
+           var mascotaId = document.getElementById("mascota").value;
+           var veterinarioId = document.getElementById("veterinario").value;
+           var fecha = document.getElementById("fecha").value;
+           var hora = document.getElementById("hora").value;
+
+           var datosCita = {
+               clienteId: clienteId,
+               mascotaId: mascotaId,
+               veterinarioId: veterinarioId,
+               fecha: fecha,
+               hora: hora
+           };
+
+           fetch('/guardar_cita', { // Ruta del servidor que maneja la solicitud para guardar la cita
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(datosCita)
+           })
+           .then(response => {
+               if (response.status === 200) {
+                   return response.json(); // Si la respuesta es 200, continuar procesando
+                } else {
+throw new Error('Error en la solicitud'); // Si la respuesta no es 200, lanzar un error
+}
+})
+.then(data => {
+var mensajeDiv = document.getElementById("mensaje");
+mensajeDiv.style.color = "green";
+mensajeDiv.textContent = "Cita guardada con éxito.";
+// Deshabilitar los campos después de enviar con éxito
+document.getElementById("cliente").disabled = true; // Deshabilitar el campo de cliente
+document.getElementById("mascota").disabled = true; // Deshabilitar el campo de mascota
+document.getElementById("veterinario").disabled = true; // Deshabilitar el campo de veterinario
+document.getElementById("fecha").disabled = true; // Deshabilitar el campo de fecha
+document.getElementById("hora").disabled = true; // Deshabilitar el campo de hora
+document.getElementById("citaForm").querySelector("button[type='submit']").disabled = true; // Deshabilitar el botón de enviar
+})
+.catch((error) => {
+var mensajeDiv = document.getElementById("mensaje");
+mensajeDiv.style.color = "red";
+mensajeDiv.textContent = "Error al guardar la cita: " + error.message;
+});
+});// Funcionalidad del botón de regreso
+   document.getElementById("regreso").addEventListener("click", function() {
+       window.location.href = "menuSGV.html"; // Redirigir al menú
+   });
+</script>
+</body>
+</html>

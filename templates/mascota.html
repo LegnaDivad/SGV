@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Mascota</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; background-color: #fff; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    h2 { margin-top: 0; font-size: 24px; color: #333; }
+    label { display: block; margin-bottom: 5px; color: #666; }
+    input[type="text"], input[type="number"], select { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+    button[type="submit"], button[type="button"] { background-color: #4caf50; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button[type="submit"]:hover, button[type="button"]:hover { background-color: #45a049; }
+    .mensaje { margin-top: 15px; font-size: 16px; }
+</style>
+</head>
+<body>
+<div class="container">
+    <h2>Registro de Mascota</h2>
+    <form id="formularioMascota">
+        <label for="nombreMascota">Nombre de la Mascota:</label>
+        <input type="text" id="nombre" name="nombreMascota" required>
+        
+        <label for="especie">Especie:</label>
+        <input type="text" id="especie" name="especie" required>
+        
+        <label for="raza">Raza:</label>
+        <input type="text" id="raza" name="raza">
+        
+        <label for="edad">Edad:</label>
+        <input type="number" id="edad" name="edad" required>
+        
+        <label for="genero">Género:</label>
+        <select id="genero" name="genero" required>
+            <option value="Macho">Macho</option>
+            <option value="Hembra">Hembra</option>
+        </select>
+        
+        <button type="submit">Registrar Mascota</button>
+        <button type="button" id="regreso">Volver al Menú</button>
+    </form>
+    <div id="mensaje" class="mensaje"></div>
+</div>
+<script>
+document.getElementById("formularioMascota").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    var nombre = document.getElementById("nombre").value;
+    var especie = document.getElementById("especie").value;
+    var raza = document.getElementById("raza").value;
+    var edad = document.getElementById("edad").value;
+    var genero = document.getElementById("genero").value;
+
+    var datosMascota = {
+        nombre: nombre,
+        especie: especie,
+        raza: raza,
+        edad: edad,
+        genero: genero
+    };
+
+    fetch('http://localhost:3000/guardar_mascota', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosMascota)
+    })
+    .then(response => response.json())
+    .then(data => {
+        var mensajeDiv = document.getElementById("mensaje");
+        mensajeDiv.textContent = data.message;
+        mensajeDiv.style.color = data.message === 'Mascota guardada exitosamente' ? 'green' : 'red';
+        if (data.message === 'Mascota guardada exitosamente') {
+            document.getElementById("nombre").disabled = true;
+            document.getElementById("especie").disabled = true;
+            document.getElementById("raza").disabled = true;
+            document.getElementById("edad").disabled = true;
+            document.getElementById("genero").disabled = true;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+// Funcionalidad del botón de regreso
+document.getElementById("regreso").addEventListener("click", function() {
+    window.location.href = "menuSGV.html"; // Redirigir al menú
+});
+</script>
+</body>
+</html>

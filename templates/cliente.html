@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Clientes</title>
+<style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+    h2 { text-align: center; margin-top: 20px; color: #333; }
+    form { max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 5px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
+    label { display: block; margin-bottom: 5px; color: #666; }
+    input[type="text"], input[type="email"], input[type="tel"] { width: 100%; padding: 8px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 16px; }
+    button[type="submit"], button[type="button"] { background-color: #4caf50; color: #fff; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+    button[type="submit"]:hover, button[type="button"]:hover { background-color: #45a049; }
+    .mensaje { margin-top: 15px; font-size: 16px; text-align: center; }
+</style>
+</head>
+<body>
+<h2>Formulario de Clientes</h2>
+<form id="clienteForm">
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required>
+    <label for="telefono">Teléfono:</label>
+    <input type="tel" id="telefono" name="telefono">
+    <label for="email">Correo Electrónico:</label>
+    <input type="email" id="email" name="email" required>
+    <button type="submit">Agregar Cliente</button>
+    <button type="button" onclick="window.location.href='menuSGV.html'">Regresar a Menú</button>
+</form>
+<div id="mensaje" class="mensaje"></div>
+<script>
+document.getElementById("clienteForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    var nombre = document.getElementById("nombre").value;
+    var direccion = document.getElementById("direccion").value;
+    var telefono = document.getElementById("telefono").value;
+    var email = document.getElementById("email").value;
+
+    var datosCliente = {
+        nombre: nombre,
+        direccion: direccion,
+        telefono: telefono,
+        email: email
+    };
+
+    fetch('http://localhost:3000/guardar_cliente', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosCliente)
+    }).then(response => {
+        if (response.ok) {
+            document.getElementById("nombre").disabled = true;
+            document.getElementById("direccion").disabled = true;
+            document.getElementById("telefono").disabled = true;
+            document.getElementById("email").disabled = true;
+            return response.json();
+        }
+        throw new Error('Error al guardar el cliente');
+    }).then(data => {
+        var mensajeDiv = document.getElementById("mensaje");
+        mensajeDiv.style.color = "green";
+        mensajeDiv.textContent = data.message;
+    }).catch(error => {
+        var mensajeDiv = document.getElementById("mensaje");
+        mensajeDiv.style.color = "red";
+        mensajeDiv.textContent = error.message;
+    });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Formulario de Creación de Veterinarios</title>
+   <style>
+       body {
+           font-family: Arial, sans-serif;
+           margin: 0;
+           padding: 0;
+           background-color: #f4f4f4;
+       }
+       .container {
+           max-width: 600px;
+           margin: 0 auto;
+           padding: 20px;
+           background-color: #fff;
+           border-radius: 5px;
+           box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+       }
+       h2 {
+           margin-top: 0;
+           font-size: 24px;
+           color: #333;
+       }
+       label {
+           display: block;
+           margin-bottom: 5px;
+           color: #666;
+       }
+       input[type="text"] {
+           width: 100%;
+           padding: 8px;
+           margin-bottom: 15px;
+           border: 1px solid #ccc;
+           border-radius: 4px;
+           box-sizing: border-box;
+           font-size: 16px;
+       }
+       button[type="submit"],
+       button[type="button"] {
+           background-color: #4caf50;
+           color: #fff;
+           padding: 10px 20px;
+           border: none;
+           border-radius: 4px;
+           cursor: pointer;
+           font-size: 16px;
+           margin-right: 10px;
+       }
+       button[type="submit"]:hover,
+       button[type="button"]:hover {
+           background-color: #45a049;
+       }
+       .mensaje {
+           margin-top: 15px;
+           font-size: 16px;
+       }
+   </style>
+</head>
+<body>
+   <div class="container">
+       <h2>Formulario de Creación de Veterinarios</h2>
+       <form id="veterinarioForm">
+           <label for="id">ID:</label>
+           <input type="text" id="id" name="id" required>
+           <label for="nombre">Nombre:</label>
+           <input type="text" id="nombre" name="nombre" required>
+           <label for="especialidad">Especialidad:</label>
+           <input type="text" id="especialidad" name="especialidad" required>
+           <button type="submit">Guardar Veterinario</button>
+           <button type="button" id="regreso">Volver al Menú</button>
+       </form>
+       <div id="mensaje" class="mensaje"></div>
+   </div>
+   <script>
+       document.getElementById("veterinarioForm").addEventListener("submit", function(event) {
+           event.preventDefault();
+           
+           var id = document.getElementById("id").value;
+           var nombre = document.getElementById("nombre").value;
+           var especialidad = document.getElementById("especialidad").value;
+
+           var datosVeterinario = {
+               id: id,
+               nombre: nombre,
+               especialidad: especialidad
+           };
+
+           fetch('http://localhost:3000/guardar_veterinario', { // Ruta del servidor que maneja la solicitud para guardar el veterinario
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(datosVeterinario)
+           })
+           .then(response => {
+               if (response.status === 200) {
+                   return response.json(); // Si la respuesta es 200, continuar procesando la respuesta
+               } else {
+                   throw new Error('Error en la solicitud'); // Si la respuesta no es 200, lanzar un error
+               }
+           })
+           .then(data => {
+               var mensajeDiv = document.getElementById("mensaje");
+               mensajeDiv.style.color = "green";
+               mensajeDiv.textContent = "Veterinario guardado con éxito.";
+               // Limpiar el formulario después de enviar con éxito
+               document.getElementById("veterinarioForm").reset();
+           })
+           .catch((error) => {
+               var mensajeDiv = document.getElementById("mensaje");
+               mensajeDiv.style.color = "red";
+               mensajeDiv.textContent = "Error al guardar el veterinario: " + error.message;
+           });
+       });
+
+       // Funcionalidad del botón de regreso
+       document.getElementById("regreso").addEventListener("click", function() {
+           window.location.href = "menuAdmin.html"; // Redirigir al menú
+       });
+   </script>
+</body>
+</html>

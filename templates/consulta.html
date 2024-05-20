@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Registro de Consulta Veterinaria</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+    h1 {
+        text-align: center;
+        margin-top: 20px;
+        color: #333;
+    }
+    .formulario-veterinaria {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    label {
+        display: block;
+        margin-bottom: 5px;
+        color: #666;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    select,
+    textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 16px;
+    }
+    button[type="submit"],
+    button[type="button"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    button[type="submit"]:hover,
+    button[type="button"]:hover {
+        background-color: #45a049;
+    }
+    .mensaje {
+        margin-top: 15px;
+        font-size: 16px;
+    }
+</style>
+</head>
+<body>
+<h1>Registro de Consulta Veterinaria</h1>
+<form id="formulario1" class="formulario-veterinaria">
+    <label for="nombreCliente">Nombre del Cliente:</label>
+    <input type="text" id="nombreCliente" name="nombreCliente" required>
+    
+    <label for="direccion">Dirección:</label>
+    <input type="text" id="direccion" name="direccion" required>
+    
+    <label for="telefono">Teléfono:</label>
+    <input type="text" id="telefono" name="telefono">
+    
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    
+    <label for="nombreMascota">Nombre de la Mascota:</label>
+    <input type="text" id="nombreMascota" name="nombreMascota" required>
+    
+    <label for="especie">Especie:</label>
+    <input type="text" id="especie" name="especie" required>
+    
+    <label for="raza">Raza:</label>
+    <input type="text" id="raza" name="raza">
+    
+    <label for="edad">Edad:</label>
+    <input type="number" id="edad" name="edad" required>
+    
+    <label for="genero">Género:</label>
+    <select id="genero" name="genero" required>
+        <option value="Macho">Macho</option>
+        <option value="Hembra">Hembra</option>
+    </select>
+    
+    <label for="fecha">Fecha de Consulta:</label>
+    <input type="date" id="fecha" name="fecha" required>
+    
+    <label for="diagnostico">Diagnóstico:</label>
+    <textarea id="diagnostico" name="diagnostico" required></textarea>
+    
+    <label for="tratamiento">Tratamiento:</label>
+    <textarea id="tratamiento" name="tratamiento" required></textarea>
+    
+    <button type="submit">Registrar Consulta</button>
+    <button type="button" id="regreso">Regresar al Menú</button>
+    
+    <div id="mensaje" class="mensaje"></div>
+</form>
+<script>
+document.getElementById("formulario1").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    var nombreCliente = document.getElementById("nombreCliente").value;
+    var direccion = document.getElementById("direccion").value;
+    var telefono = document.getElementById("telefono").value;
+    var email = document.getElementById("email").value;
+    var nombreMascota = document.getElementById("nombreMascota").value;
+    var especie = document.getElementById("especie").value;
+    var raza = document.getElementById("raza").value;
+    var edad = document.getElementById("edad").value;
+    var genero = document.getElementById("genero").value;
+    var fecha = document.getElementById("fecha").value;
+    var diagnostico = document.getElementById("diagnostico").value;
+    var tratamiento = document.getElementById("tratamiento").value;
+
+    var datosConsulta = {
+        nombreCliente: nombreCliente,
+        direccion: direccion,
+        telefono: telefono,
+        email: email,
+        nombreMascota: nombreMascota
+        ,
+        especie: especie,
+        raza: raza,
+        edad: edad,
+        genero: genero,
+        fecha: fecha,
+        diagnostico: diagnostico,
+        tratamiento: tratamiento
+    };
+
+    fetch('http://localhost:3000/guardar_consulta', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datosConsulta)
+    })
+    .then(response => {
+        if (response.status === 200) {
+            // Deshabilitar los campos después de enviar con éxito
+            document.getElementById("nombreCliente").disabled = true;
+            document.getElementById("direccion").disabled = true;
+            document.getElementById("telefono").disabled = true;
+            document.getElementById("email").disabled = true;
+            document.getElementById("nombreMascota").disabled = true;
+            document.getElementById("especie").disabled = true;
+            document.getElementById("raza").disabled = true;
+            document.getElementById("edad").disabled = true;
+            document.getElementById("genero").disabled = true;
+            document.getElementById("fecha").disabled = true;
+            document.getElementById("diagnostico").disabled = true;
+            document.getElementById("tratamiento").disabled = true;
+            document.getElementById("formulario1").querySelector("button[type='submit']").disabled = true; // Deshabilitar el botón de enviar
+
+            // Mostrar mensaje de éxito
+            var mensajeDiv = document.getElementById("mensaje");
+            mensajeDiv.style.color = "green";
+            mensajeDiv.textContent = "Consulta registrada exitosamente.";
+        } else {
+            // Mostrar mensaje de error
+            var mensajeDiv = document.getElementById("mensaje");
+            mensajeDiv.style.color = "red";
+            mensajeDiv.textContent = "Error al registrar la consulta.";
+        }
+    })
+    .catch(error => {
+        // Mostrar mensaje de error
+        var mensajeDiv = document.getElementById("mensaje");
+        mensajeDiv.style.color = "red";
+        mensajeDiv.textContent = "Error al registrar la consulta: " + error.message;
+    });
+});
+
+// Funcionalidad del botón de regreso
+document.getElementById("regreso").addEventListener("click", function() {
+    window.location.href = "menuSGV.html"; // Redirigir al menú
+});
+</script>
+</body>
+</html>
