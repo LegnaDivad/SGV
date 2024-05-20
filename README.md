@@ -1,4 +1,4 @@
-Aquí tienes un README más completo y detallado para tu proyecto de Sistema de Gestión Veterinaria (SVG), basado en la información y contexto proporcionados:
+
 
 # Sistema de Gestión Veterinaria (SVG)
 
