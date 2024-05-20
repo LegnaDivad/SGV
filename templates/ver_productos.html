@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lista de Consultas</title>
+<title>Ver Productos</title>
 <link rel="stylesheet" href="styles.css">
 <style>
     body {
@@ -49,61 +49,64 @@
     tr:nth-child(even) {
         background-color: #f9f9f9;
     }
+
+    button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
 </style>
 </head>
 <body>
 <div class="container">
-    <h1>Lista de Consultas</h1>
+    <h1>Lista de Productos</h1>
     <table>
         <thead>
             <tr>
-                <th>Cliente</th>
-                <th>Dirección</th>
-                <th>Teléfono</th>
-                <th>Email</th>
-                <th>Mascota</th>
-                <th>Especie</th>
-                <th>Raza</th>
-                <th>Edad</th>
-                <th>Género</th>
-                <th>Fecha</th>
-                <th>Diagnóstico</th>
-                <th>Tratamiento</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
             </tr>
         </thead>
-        <tbody id="consultasTableBody">
-            <!-- Las consultas se cargarán aquí dinámicamente -->
+        <tbody id="productosTableBody">
+            <!-- Los productos se cargarán aquí dinámicamente -->
         </tbody>
     </table>
+    <button id="volverMenu">Volver al Menú</button>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('http://localhost:3001/lista_consultas')
+    fetch('http://localhost:3001/lista_productos')
         .then(response => response.json())
         .then(data => {
-            const tableBody = document.getElementById('consultasTableBody');
-            data.forEach(consulta => {
+            const tableBody = document.getElementById('productosTableBody');
+            data.forEach(producto => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${consulta.nombreCliente}</td>
-                    <td>${consulta.direccion}</td>
-                    <td>${consulta.telefono}</td>
-                    <td>${consulta.email}</td>
-                    <td>${consulta.nombreMascota}</td>
-                    <td>${consulta.especie}</td>
-                    <td>${consulta.raza}</td>
-                    <td>${consulta.edad}</td>
-                    <td>${consulta.genero}</td>
-                    <td>${consulta.fecha}</td>
-                    <td>${consulta.diagnostico}</td>
-                    <td>${consulta.tratamiento}</td>
+                    <td>${producto.nombre}</td>
+                    <td>${producto.descripcion}</td>
+                    <td>${producto.precio}</td>
+                    <td>${producto.cantidad}</td>
                 `;
                 tableBody.appendChild(row);
             });
         })
         .catch(error => {
-            console.error('Error al cargar las consultas:', error);
+            console.error('Error al cargar los productos:', error);
         });
+
+    document.getElementById('volverMenu').addEventListener('click', function() {
+        window.location.href = 'menuSGV.html';
+    });
 });
 </script>
 </body>

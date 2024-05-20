@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Consulta Veterinaria</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .consulta-info {
+        margin-bottom: 20px;
+    }
+
+    .consulta-info p {
+        margin: 5px 0;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <h1>Consulta Veterinaria</h1>
+    <div class="consulta-info">
+        <h2>Información del Cliente</h2>
+        <p><label>Nombre Cliente:</label> <span id="nombreCliente"></span></p>
+        <p><label>Dirección:</label> <span id="direccion"></span></p>
+        <p><label>Teléfono:</label> <span id="telefono"></span></p>
+        <p><label>Email:</label> <span id="email"></span></p>
+    </div>
+    <div class="consulta-info">
+        <h2>Información de la Mascota</h2>
+        <p><label>Nombre Mascota:</label> <span id="nombreMascota"></span></p>
+        <p><label>Especie:</label> <span id="especie"></span></p>
+        <p><label>Raza:</label> <span id="raza"></span></p>
+        <p><label>Edad:</label> <span id="edad"></span></p>
+        <p><label>Género:</label> <span id="genero"></span></p>
+    </div>
+    <div class="consulta-info">
+        <h2>Consulta Médica</h2>
+        <p><label>Fecha:</label> <span id="fecha"></span></p>
+        <p><label>Diagnóstico:</label> <span id="diagnostico"></span></p>
+        <p><label>Tratamiento:</label> <span id="tratamiento"></span></p>
+    </div>
+</div>
+<script>
+    // Obtener los datos de la consulta del servidor y llenar el formulario
+    fetch('http://localhost:3001/lista_consultas')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('nombreCliente').textContent = data.nombreCliente;
+            document.getElementById('direccion').textContent = data.direccion;
+            document.getElementById('telefono').textContent = data.telefono;
+            document.getElementById('email').textContent = data.email;
+            document.getElementById('nombreMascota').textContent = data.nombreMascota;
+            document.getElementById('especie').textContent = data.especie;
+            document.getElementById('raza').textContent = data.raza;
+            document.getElementById('edad').textContent = data.edad;
+            document.getElementById('genero').textContent = data.genero;
+            document.getElementById('fecha').textContent = data.fecha;
+            document.getElementById('diagnostico').textContent = data.diagnostico;
+            document.getElementById('tratamiento').textContent = data.tratamiento;
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos de la consulta:', error);
+        });
+</script>
+</body>
+</html>
